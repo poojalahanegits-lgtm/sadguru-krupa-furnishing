@@ -1,5 +1,5 @@
 // utils/orderUtils.js
-import { ORDER_FIELDS } from "../constants/orderInputFields";
+import { ORDER_FIELDS } from "../../constants/orderInputFields";
 
 export const generateOrderNo = (orders = []) => {
   const year = new Date().getFullYear();

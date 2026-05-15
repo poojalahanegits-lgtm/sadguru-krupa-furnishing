@@ -6,8 +6,8 @@ import ProductForm from "./ProductForm";
 import ConfirmModal from "./common/ConfirmModal";
 import { toast } from "react-toastify";
 import { FiEye } from "react-icons/fi";
-import FIELD_CONFIG from "../constants/inputFieldConfig";
-
+import FIELD_CONFIG from "../../constants/inputFieldConfig";
+import ProductDetailsModal from "./common/ProductDetailsModal";
 const CustomerSnapshot = ({
   filteredOrders,
   selectedCustomer,
@@ -23,6 +23,9 @@ const CustomerSnapshot = ({
   startProductEdit,
   deleteProduct,
   formatDate,
+  isEditingActive,
+  setSelectedProduct,
+  setShowProductModal,
 }) => {
   if (!selectedCustomer) {
     return (
@@ -38,66 +41,81 @@ const CustomerSnapshot = ({
 
   return (
     <div className="sticky lg:top-0 z-30 ">
-      {/* Top bar */}
-      <div className="px-5 pt-2 pb-4 flex flex-row lg:flex-row lg:items-center lg:justify-between gap-3 border-b">
-        {/* Left side */}
-        <div className="flex items-center gap-3 ">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-sm px-3 py-2 bg-gray-900 hover:bg-black text-white rounded-lg cursor-pointer"
-          >
-            <FiArrowLeft /> Back
-          </button>
-
-          {/* <h2 className="text-lg font-semibold">Orders - {customer?.name}</h2> */}
-        </div>
-        <div>
-          <h2 className="lg:text-xl font-medium">
-            {" "}
-            Customer and Order Details
-          </h2>{" "}
-        </div>
-        {/* 🔍 Search Input */}
-        <div className="relative w-full sm:w-full lg:w-80">
-          <input
-            type="text"
-            placeholder="Search orders, products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl  outline-none"
-          />
-
-          {/* Search Icon */}
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-            <FiSearch className="w-4 h-4" />
-          </span>
-
-          {/* Clear Button */}
-          {searchTerm && (
+      <div className="px-4 sm:px-5 pt-3 pb-4 border-b">
+        {/* TOP ROW */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          {/* LEFT SIDE */}
+          <div className="flex items-center justify-between gap-3">
             <button
-              onClick={() => setSearchTerm("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black"
+              onClick={onBack}
+              className="flex items-center gap-2 text-sm px-3 py-2 bg-gray-900 hover:bg-black text-white rounded-lg cursor-pointer shrink-0"
             >
-              <FiX size={16} />
+              <FiArrowLeft />
+              Back
             </button>
-          )}
+
+            {/* MOBILE TITLE */}
+            <h2 className="text-sm sm:text-base font-medium lg:hidden text-right">
+              Customer & Order Details
+            </h2>
+          </div>
+
+          {/* DESKTOP TITLE */}
+          <div className="hidden lg:flex justify-center flex-1">
+            <h2 className="text-xl font-medium">Customer and Order Details</h2>
+          </div>
+
+          {/* SEARCH */}
+          <div className="relative w-full lg:w-80">
+            <input
+              type="text"
+              placeholder="Search orders, products..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-xl outline-none text-sm sm:text-base"
+            />
+
+            {/* SEARCH ICON */}
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+              <FiSearch className="w-4 h-4" />
+            </span>
+
+            {/* CLEAR BUTTON */}
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black"
+              >
+                <FiX size={16} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
       {/* all customers details */}
-      <div className="flex-1 min-h-0 px-5  bg-black ">
-        <div className="border border-gray-800 rounded-2xl px-3 bg-black shadow-sm m">
+      <div className="flex-1 min-h-0 px-5 pb-1  bg-black ">
+        <div className=" lg:px-3   ">
           <div className="flex justify-between gap-3 flex-wrap items-start h-full ">
             <div>
-              <h3 className="text-xl sm:text-2xl lg:text-3xl  mb-2 pt-1  break-words text-white">
+              <h3 className="text-md sm:text-2xl lg:text-3xl  mb-2 pt-1  break-words text-white">
                 {selectedCustomer.name}{" "}
-                <span className="px-3 mx-2 py-1 rounded-full text-[15px]  bg-gray-900 text-white border ">
-                  {customerOrders.length} Order(s)
+                <span className="px-3 mx-2 py-1 rounded-full text-[12px]  bg-gray-600 text-white border ">
+                  <span className="text bold  text-[14px] lg:text-[16px] pt-1">
+                    {" "}
+                    {customerOrders.length}{" "}
+                  </span>
+                  Order(s)
                 </span>
               </h3>
 
-              <div className=" text-white  text-xs sm:text-sm  break-words ">
-                {selectedCustomer.mobile} • {selectedCustomer.city} •{" "}
-                {selectedCustomer.address}
+              <div className="text-white text-xs sm:text-sm break-words">
+                {[
+                  selectedCustomer?.mobile,
+                  selectedCustomer?.city,
+                  selectedCustomer?.address,
+                ]
+                  .filter(Boolean)
+                  .join(" • ")}
               </div>
 
               {/* <div className="flex gap-2 bg-amber-700 flex-wrap lg:mt-3">
@@ -109,7 +127,11 @@ const CustomerSnapshot = ({
               </div> */}
             </div>
 
-            <div className="flex justify-between gap-3 mb-1 md:mb-0  mt-0 md:mt-2 lg:mt-4 b ">
+            <div
+              className={`flex justify-between gap-3 mb-1 md:mb-0  mt-0   ${
+                isEditingActive() ? "" : "mt-4"
+              }`}
+            >
               <div>
                 <button
                   className="px-4 py-1 md:py-2 rounded-xl cursor-pointer bg-white text-black font-semibold hover:bg-gray-200 transition"
@@ -140,28 +162,53 @@ const CustomerSnapshot = ({
       <div className="lg:flex-1 lg:overflow-y-auto min-h-0 bg-[#fbfbfb] lg:h-[350px] px-3 sm:px-5 pb-5 space-y-3 pt-2">
         {filteredOrders.map((order) => (
           <div key={order._id} className="md::border rounded-2xl p-4 ">
-            <div className="flex flex-row justify-between gap-3 sm:items-center">
-              <div>
-                <div className="font-extrabold text-lg sm:text-xl break-all">
+            <div className="flex flex-col sm:flex-row sm:justify-between gap-3 sm:items-center">
+              <div className="flex items-start justify-between gap-3 w-full sm:w-auto">
+                <div className="font-extrabold text-base sm:text-xl break-all">
                   {order.orderNo}
                 </div>
-              </div>{" "}
+
+                {/* MOBILE STATUS */}
+                <div
+                  className={`sm:hidden  flex px-3 lg:py-1 py-1 border rounded-full text-xs lg:text-[16px] `}
+                >
+                  {order.orderStatus}
+                </div>
+
+                <div className="sm:hidden">
+                  <div className="flex justify-end sm:justify-start gap-2 items-center w-full sm:w-auto">
+                    <button
+                      className="px-1 py-1 cursor-pointer rounded-lg   text-md "
+                      onClick={() => {
+                        closeAllPanels(); // ✅ reset everything first
+                        setEditingOrder(order);
+                      }}
+                      // onClick={() => {
+                      //   setEditingOrder(order);
+                      //   setEditingProductState(null);
+                      // }}
+                    >
+                      <i className="fas fa-edit text-green-600 hover:text-green-800 cursor-pointer"></i>
+                    </button>
+                    <button
+                      className="px-1 py-1 cursor-pointer rounded-lg bg-white  text-red-600 text-sm hover:bg-red-50"
+                      onClick={() => deleteOrder(order._id)}
+                    >
+                      <i className="fas fa-trash-alt text-red-600 hover:text-red-800 cursor-pointer"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <div
-                className={`px-3 lg:py-1 py-2 rounded-full text-xs lg:text-[16px]   border 
+                className={`px-3 hidden md:flex lg:py-1 py-2 rounded-full text-xs lg:text-[16px]   border 
 
   `}
-                //                   className={`px-3 py-1 rounded-full text-xs lg:text-[16px]  font-bold border bg-white
-                //   ${order.orderStatus === "Cancelled" ? "text-red-500  bg-green-700  border-red-300 " : ""}
-                //   ${order.orderStatus === "Pending" ? "text-yellow-800 bg-green-700    0border-yellow-300" : "bg-white"}
-                //   ${order.orderStatus === "Completed" ? "text-green-500  rder-green-300" : ""}
-                //   ${order.orderStatus === "Processing" ? "text-blue-500 bg-red-700 border-blue-300" : ""}
-                // `}
               >
                 {order.orderStatus}
               </div>
-              <div className="flex flex-wrap gap-2 items-center ">
+              <div className=" hidden sm:flex justify-end sm:justify-start gap-2 items-center w-full sm:w-auto">
                 <button
-                  className="px-3 py-1 cursor-pointer rounded-lg   text-sm "
+                  className="px-3 py-1 cursor-pointer rounded-lg   text-lg "
                   onClick={() => {
                     closeAllPanels(); // ✅ reset everything first
                     setEditingOrder(order);
@@ -263,86 +310,15 @@ const CustomerSnapshot = ({
                     <div className="flex items-center flex-wrap gap-3 mt-2 sm:mt-0">
                       {/* View Product */}
                       <div className="relative group ">
-                        <button className="cursor-pointer pt-2">
+                        <button
+                          className="cursor-pointer pt-2"
+                          onClick={() => {
+                            setSelectedProduct(product);
+                            setShowProductModal(true);
+                          }}
+                        >
                           <FiEye size={20} />
                         </button>
-
-                        {/* Hover Card */}
-                        <div
-                          className="
-hidden lg:block
-absolute right-0 top-8 z-50
-w-140 h-60 overflow-y-auto bg-white border border-gray-200
-rounded-2xl shadow-2xl
-opacity-0 invisible
-group-hover:opacity-100
-group-hover:visible
-transition-all duration-300
-p-4
-"
-                        >
-                          {/* Header */}
-                          <div className="border-b pb-2 mb-3">
-                            <h4 className="font-bold text-lg text-gray-800">
-                              {product.category?.charAt(0).toUpperCase() +
-                                product.category?.slice(1)}
-                            </h4>
-
-                            <p className="text-sm text-gray-500 tracking-[8px]s">
-                              Code: {product.productCode || "-"}
-                            </p>
-                          </div>
-
-                          {/* Status */}
-                          <div className="mb-3">
-                            <span
-                              className={`px-3 py-1 rounded-full text-xs font-semibold border
-            ${
-              product?.orderStatus === "Cancelled"
-                ? "text-red-700 bg-red-50 border-red-200"
-                : ""
-            }
-            ${
-              product?.orderStatus === "Pending"
-                ? "text-yellow-700 bg-yellow-50 border-yellow-200"
-                : ""
-            }
-            ${
-              product?.orderStatus === "Completed"
-                ? "text-green-700 bg-green-50 border-green-200"
-                : ""
-            }
-            ${
-              product?.orderStatus === "Processing"
-                ? "text-blue-700 bg-blue-50 border-blue-200"
-                : ""
-            }
-          `}
-                            >
-                              {product?.orderStatus}
-                            </span>
-                          </div>
-
-                          {/* Product Attributes */}
-                          <div className="grid grid-cols-2 gap-3 tracking-wider text-sm">
-                            {Object.entries(product.attributes || {}).map(
-                              ([key, value]) => (
-                                <div
-                                  key={key}
-                                  className="bg-gray-50 rounded-lg p-2 border border-gray-100"
-                                >
-                                  <p className="text-gray-500 text-xs">
-                                    {FIELD_CONFIG[key]?.label || key}
-                                  </p>
-
-                                  <p className="font-semibold text-gray-800 break-words">
-                                    {value || "-"}
-                                  </p>
-                                </div>
-                              ),
-                            )}
-                          </div>
-                        </div>
                       </div>
                       {/* Edit Product */}
                       <button
@@ -422,6 +398,8 @@ const OrderDetailsPage = ({
   const [productOrderId, setProductOrderId] = useState(null);
   const [showProductDeleteModal, setShowProductDeleteModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const closeAllPanels = () => {
     setEditingCustomer(null);
@@ -520,7 +498,18 @@ const OrderDetailsPage = ({
 
   //   setEditingOrder(null);
   // };
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        setShowProductModal(false);
+        setSelectedProduct(null);
+      }
+    };
 
+    window.addEventListener("keydown", handleEsc);
+
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
   const startProductEdit = (orderId, product) => {
     closeAllPanels(); // ✅ important
     setEditingProductState(product);
@@ -643,6 +632,9 @@ ${isEditingActive() ? "hidden lg:flex lg:w-[40%]" : "w-full"}
               startProductEdit={startProductEdit}
               deleteProduct={deleteProduct}
               formatDate={formatDate}
+              isEditingActive={isEditingActive}
+              setSelectedProduct={setSelectedProduct}
+              setShowProductModal={setShowProductModal}
             />
           </div>
         </div>
@@ -761,7 +753,16 @@ ${isEditingActive() ? "hidden lg:flex lg:w-[40%]" : "w-full"}
           </div>
         </div>
       </div>
-
+      {/* Product Details Modal */}
+      <ProductDetailsModal
+        product={selectedProduct}
+        isOpen={showProductModal}
+        onClose={() => {
+          setShowProductModal(false);
+          setSelectedProduct(null);
+        }}
+        formatDate={formatDate}
+      />
       <ConfirmModal
         isOpen={showDeleteModal}
         title="Delete Order"
@@ -784,7 +785,7 @@ ${isEditingActive() ? "hidden lg:flex lg:w-[40%]" : "w-full"}
         }}
       />
 
-      <style>{`
+      {/* <style>{`
         @keyframes slideInRight {
           from {
             opacity: 0;
@@ -798,7 +799,7 @@ ${isEditingActive() ? "hidden lg:flex lg:w-[40%]" : "w-full"}
         .animate-slideInRight {
           animation: slideInRight 0.4s ease-out forwards;
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 };

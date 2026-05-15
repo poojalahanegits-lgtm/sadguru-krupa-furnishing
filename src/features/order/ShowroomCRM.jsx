@@ -225,10 +225,10 @@ const ShowroomCRM = () => {
       const res = await checkMobileMutation.mutateAsync(mobile);
 
       if (res.exists) {
-        toast.dismiss();
-        toast.warning(
-          `Customer already exists: ${res.data.name},  Do you want to create again`,
-        );
+        // toast.dismiss();
+        // toast.warning(
+        //   `Customer already exists: ${res.data.name},  Do you want to create again`,
+        // );
       }
 
       return res;

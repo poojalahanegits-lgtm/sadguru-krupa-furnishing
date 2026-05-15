@@ -43,6 +43,7 @@ const AddCustomer = ({
   // Handle mobile input change
   const handleMobileChange = (value) => {
     setMobileError("");
+    setMobileExists(false);
 
     if (value && value.length !== 10) {
       setMobileError("Mobile number must be exactly 10 digits");
@@ -62,11 +63,9 @@ const AddCustomer = ({
 
       if (exists) {
         setMobileExists(true);
-        setMobileError("This mobile number already exists");
-
-        // toast.error(
-        //   `Customer already exists: ${customerName}. Do you want to continue?`,
-        // );
+        setMobileError(
+          `Customer already exists${customerName ? ` (${customerName})` : ""}`,
+        );
       } else {
         setMobileExists(false);
         setMobileError("");
@@ -98,7 +97,10 @@ const AddCustomer = ({
       setMobileError("Mobile number must be exactly 10 digits");
       return;
     }
-
+    if (mobileExists) {
+      setMobileError("This mobile number already exists");
+      return;
+    }
     if (data.alternateMobile && !validateMobile(data.alternateMobile)) {
       setAlternateMobileError("Alternate number must be exactly 10 digits");
       return;
@@ -210,16 +212,39 @@ const AddCustomer = ({
                     field.onChange(value);
                     handleMobileChange(value);
 
-                    if (value.length === 10) {
-                      onCheckMobile?.(value);
+                    if (value.length === 10 && onCheckMobile) {
+                      onCheckMobile(value)
+                        .then((res) => {
+                          const exists = res?.exists || res?.data?.exists;
+                          const customerName =
+                            res?.data?.data?.name || res?.data?.name;
+
+                          if (exists) {
+                            setMobileExists(true);
+                            setMobileError(
+                              `Customer already exists${
+                                customerName ? ` (${customerName})` : ""
+                              }`,
+                            );
+                          } else {
+                            setMobileExists(false);
+                            setMobileError("");
+                          }
+                        })
+                        .catch((err) => {
+                          console.log("API ERROR:", err);
+                        });
                     }
                   }}
-                  onBlur={handleMobileBlur}
+                  // onBlur={handleMobileBlur}
                   placeholder="Primary contact number"
                   className={`input ${mobileError ? "border-red-500" : ""}`}
                 />
               )}
             />
+            {mobileError && (
+              <p className="text-red-500 text-xs mt-1">{mobileError}</p>
+            )}
           </div>
 
           {/* Alternate */}

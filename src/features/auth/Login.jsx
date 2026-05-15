@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { useLogin } from "./services/index";
 import SignupPage from "./SignupPage";
 import { toast } from "react-toastify";
@@ -175,7 +175,8 @@ const Login = () => {
           >
             {isSubmitting ? (
               <>
-                <span className="loader"></span> Logging in...
+                <span className="w-4 h-4 border-2 border-gray-300 border-t-black rounded-full animate-spin"></span>
+                Logging in...
               </>
             ) : (
               "Login"
@@ -197,7 +198,7 @@ const Login = () => {
         </form>
       </div>
 
-      <style>{`
+      {/* <style>{`
         .loader {
           border: 3px solid #e5e5e5;
           border-top: 3px solid #000;
@@ -210,7 +211,7 @@ const Login = () => {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-      `}</style>
+      `}</style> */}
     </>
   );
 };

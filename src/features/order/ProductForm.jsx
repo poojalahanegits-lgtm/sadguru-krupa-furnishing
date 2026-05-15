@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import productsData from "../products";
-import FIELD_CONFIG from "../constants/inputFieldConfig";
-import { ORDER_FIELDS } from "../constants/orderInputFields";
+import productsData from "../../products";
+import FIELD_CONFIG from "../../constants/inputFieldConfig";
+import { ORDER_FIELDS } from "../../constants/orderInputFields";
 import {
   categoryKeyMap,
   getAllFieldNames,

@@ -5,7 +5,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="w-full tracking-wider bg-[#eceada] scroll-mt-20 "
+      className="w-full tracking-wider bg-[#eceada] scroll-mt-16 lg:scroll-mt-24  "
     >
       {/* Heading */}
       <div className=" max-w-8xl mx-auto px-4 md:px-6 lg:px-20 py-8 lg:py-10">

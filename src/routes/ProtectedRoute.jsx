@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useCurrentUser } from "../auth/services";
+import { useCurrentUser } from "../features/auth/services/index";
 
 const ProtectedRoute = ({ allowedRole }) => {
   const { data, isLoading } = useCurrentUser();

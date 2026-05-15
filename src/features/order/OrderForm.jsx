@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { SelectStyles, InputStyles, TextareaStyles } from "../constants/Config";
+import {
+  SelectStyles,
+  InputStyles,
+  TextareaStyles,
+} from "../../constants/Config";
 import ConfirmModal from "./common/ConfirmModal";
 import ProductForm from "./ProductForm";
 import {

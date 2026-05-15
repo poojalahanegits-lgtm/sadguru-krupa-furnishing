@@ -37,7 +37,7 @@ const About = () => {
   return (
     <section
       id="about"
-      className="w-full tracking-wider lg:h-screen bg-[#eceada]"
+      className="w-full tracking-wider scroll-mt-16 lg:scroll-mt-24 lg:h-screen bg-[#eceada]"
     >
       <div className="max-w-8xl mx-auto px-4 md:px-6 lg:px-24 py-10 md:py-14 lg:py-20">
         <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-16">
@@ -88,7 +88,7 @@ const About = () => {
               {/* LEFT BUTTON */}
               <button
                 onClick={() => api?.scrollPrev()}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-30"
+                className="absolute cursor-pointer left-3 top-1/2 -translate-y-1/2 z-30"
               >
                 <img
                   src={IMAGES.leftSwipIcon} // 👈 your left icon
@@ -100,7 +100,7 @@ const About = () => {
               {/* RIGHT BUTTON */}
               <button
                 onClick={() => api?.scrollNext()}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-30"
+                className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 z-30"
               >
                 <img
                   src={IMAGES.rightSwipIcon} // 👈 your right icon

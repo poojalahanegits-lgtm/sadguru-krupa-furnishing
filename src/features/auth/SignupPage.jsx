@@ -181,7 +181,7 @@ const SignupPage = () => {
           >
             {isSubmitting ? (
               <>
-                <span className="loader"></span>
+                <span className="w-4 h-4 border-2 border-gray-300 border-t-black rounded-full animate-spin"></span>
                 Creating Account...
               </>
             ) : (
@@ -205,7 +205,7 @@ const SignupPage = () => {
         </form>
       </div>
 
-      <style>{`
+      {/* <style>{`
         .loader {
           border: 3px solid #e5e5e5;
           border-top: 3px solid #000;
@@ -224,7 +224,7 @@ const SignupPage = () => {
             transform: rotate(360deg);
           }
         }
-      `}</style>
+      `}</style> */}
     </>
   );
 };

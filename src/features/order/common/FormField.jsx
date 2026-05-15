@@ -2,7 +2,7 @@ import {
   SelectStyles,
   InputStyles,
   TextareaStyles,
-} from "../../constants/Config";
+} from "../../../constants/Config";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

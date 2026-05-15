@@ -6,7 +6,7 @@ import TableSkeleton from "./common/TableSkeleton";
 const ITEMS_PER_PAGE = 6;
 import { FiChevronDown } from "react-icons/fi";
 import OrderCard from "./common/OrderCard";
-import { formatDateTime } from "../constants/Config.js";
+import { formatDateTime } from "../../constants/Config.js";
 const statusOptions = [
   { label: "All Orders", value: "all" },
   { label: "Open", value: "open" },

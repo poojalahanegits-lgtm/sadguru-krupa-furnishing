@@ -26,7 +26,7 @@ const ProjectsSection = () => {
   return (
     <section
       id="projects"
-      className="w-full tracking-wider  bg-[#eceada] overflow-hidden scroll-mt-20"
+      className="w-full tracking-wider  bg-[#eceada] overflow-hidden scroll-mt-16 lg:scroll-mt-24 "
     >
       <div className="max-w-8xl mx-auto px-4 md:px-6 lg:px-20 py-8 lg:py-10">
         {/* TITLE */}
@@ -62,23 +62,6 @@ const ProjectsSection = () => {
           </div>
         </div>
       </div>
-
-      {/* ANIMATION */}
-      <style jsx>{`
-        .animate-scroll {
-          width: max-content;
-          animation: scroll 45s linear infinite;
-        }
-
-        @keyframes scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-      `}</style>
     </section>
   );
 };

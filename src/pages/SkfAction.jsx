@@ -25,7 +25,7 @@ const SkfAction = () => {
               <ShoppingCart size={28} />
             </div>
             <h3 className={titleClasses}>Orders</h3>
-            <button className={`${btnClasses} bg-green-600`}>
+            <button className={`${btnClasses} cursor-pointer bg-green-600`}>
               View Orders
             </button>
           </div>

@@ -4,7 +4,7 @@ import "aos/dist/aos.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { IMAGES } from "@/constants/images";
-import { useCurrentUser, useLogout } from "../auth/services";
+import { useCurrentUser, useLogout } from "../features/auth/services/index";
 const navLinks = [
   { label: "Home", section: "hero", path: "/" },
   { label: "About", section: "about", path: "/" },
@@ -320,58 +320,54 @@ const Header = () => {
                   My Account
                 </Link>
               ) : (
-                <div className="flex justify-between pt-2 pl-2">
-                  {/* SAME UI */}
-                  <div className="   border-gray-100">
-                    <h3
-                      onClick={() => setMenuOpen(false)}
-                      className="font-semibold "
-                    >
-                      {data?.user?.name || ""}
-                    </h3>
-                  </div>
-                  <div>
-                    <button
-                      onClick={() => {
-                        setDropdownOpen(false);
-                        setMenuOpen(false);
-                      }}
-                      className={`w-full  px-2 rounded-xl font-medium flex items-center justify-between transition-all duration-200 `}
-                    >
-                      <span
-                        className={`text-xl cursor-pointer ${
-                          isWhiteBg ? "text-black" : "text-white"
-                        } pr-2`}
-                      ></span>
-                      My Account
-                    </button>
-                  </div>
+                <div className="pt-4 mt-4 border-t border-gray-200 space-y-3">
+                  {/* USER INFO */}
+                  <div className="flex items-center gap-3 px-2">
+                    {data?.user?.profileImage ? (
+                      <img
+                        src={data.user.profileImage}
+                        alt={data.user.name}
+                        className="w-11 h-11 rounded-full object-cover border border-gray-300"
+                      />
+                    ) : (
+                      <div className="w-11 h-11 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold uppercase">
+                        {data?.user?.name
+                          ?.split(" ")
+                          ?.map((n) => n[0])
+                          ?.join("")}
+                      </div>
+                    )}
 
-                  {/* DROPDOWN */}
-                  {dropdownOpen && (
-                    <div className="mt-2 w-full bg-gray-50 rounded-xl overflow-hidden border border-gray-100">
-                      {/* <Link
-                        to="/profile"
-                        className="block px-4 py-3 hover:bg-gray-100 text-black"
-                      >
-                        My Profile
-                      </Link> */}
+                    <div>
+                      <p className="font-semibold text-black">
+                        {data?.user?.name}
+                      </p>
 
-                      <Link
-                        to="/skf-action"
-                        className="block px-4 py-3 hover:bg-gray-100 text-black"
-                      >
-                        Orders
-                      </Link>
-
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-3 hover:bg-red-50 text-red-600"
-                      >
-                        Logout
-                      </button>
+                      {/* <p className="text-sm text-gray-500">Welcome back</p> */}
                     </div>
-                  )}
+                  </div>
+
+                  {/* MY ACCOUNT */}
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      navigate("/skf-action");
+                    }}
+                    className="w-full text-left px-4 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 transition font-medium text-black"
+                  >
+                    My Account
+                  </button>
+
+                  {/* LOGOUT */}
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      handleLogout();
+                    }}
+                    className="w-full text-left px-4 py-3 rounded-xl bg-red-50 hover:bg-red-100 transition font-medium text-red-600"
+                  >
+                    Logout
+                  </button>
                 </div>
               )}
             </div>

@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { queryClient } from "../../../src/queryClient.js";
+import { queryClient } from "../../../../src/queryClient.js";
 /* =========================================================
    AXIOS CLIENT
 ========================================================= */

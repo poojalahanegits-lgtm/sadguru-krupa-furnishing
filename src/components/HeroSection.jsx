@@ -142,7 +142,7 @@ const HeroSection = ({
             </h1>
             <button
               onClick={() => handleNavigation(link)}
-              className="mt-6 lg:mt-12 px-6 py-3 border-2  border-white text-white tracking-widest text-sm md:text-base lg:text-xl hover:bg-white hover:text-black transition duration-300 mb-6 "
+              className="mt-6 cursor-pointer lg:mt-12 px-6 py-3 border-2  border-white text-white tracking-widest text-sm md:text-base lg:text-xl hover:bg-white hover:text-black transition duration-300 mb-6 "
             >
               {buttonText}
             </button>

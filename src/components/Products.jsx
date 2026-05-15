@@ -25,7 +25,7 @@ const ProductsSection = () => {
     <section
       ref={sectionRef}
       id="products"
-      className=" tracking-wider w-full scroll-mt-20"
+      className=" tracking-wider w-full scroll-mt-16 lg:scroll-mt-24 "
     >
       <div className="max-w-8xl mx-auto px-4 md:px-6 lg:px-24 py-10 md:py-8">
         <h2 className="text-[28px] sm:text-[36px] md:text-[44px] lg:text-[50px] text-[#6f5b57] font-medium">
@@ -64,7 +64,7 @@ const ProductsSection = () => {
           <div className="flex justify-center mt-10 md:mt-14">
             <button
               onClick={handleToggle}
-              className="px-6 md:px-8 py-3 border border-gray-500 text-gray-700 tracking-widest text-sm md:text-base lg:text-2xl hover:bg-gray-800 hover:text-white transition duration-300"
+              className="px-6 md:px-8 py-3 cursor-pointer border border-gray-500 text-gray-700 tracking-widest text-sm md:text-base lg:text-2xl hover:bg-gray-800 hover:text-white transition duration-300"
             >
               {showAll ? "SHOW LESS" : "VIEW ALL PRODUCTS"}
             </button>
