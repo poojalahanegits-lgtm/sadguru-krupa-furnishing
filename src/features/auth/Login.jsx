@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { user } = useAuth();
-  console.log(user);
+  //console.log(user);
 
   // useEffect(() => {
   //   if (user) {

@@ -1,5 +1,3 @@
-// src/components/orders/ProductDetailsModal.jsx
-
 import React from "react";
 import { FiX } from "react-icons/fi";
 import FIELD_CONFIG from "../../../constants/inputFieldConfig";
@@ -112,7 +110,7 @@ const ProductDetailsModal = ({ product, isOpen, onClose, formatDate }) => {
                         {FIELD_CONFIG[key]?.label || key}
                       </p>
 
-                      <p className="text-base font-semibold text-gray-800 break-words">
+                      <p className="text-base font-semibold text-gray-800 break-word">
                         {value || "-"}
                       </p>
                     </div>
