@@ -1,3 +1,11 @@
+// =========================
+// 🔹 CUSTOMER FORM COMPONENT
+// Used for:
+// - Create Customer
+// - Edit Customer
+// - Save & Continue Flow
+// =========================
+
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -9,10 +17,15 @@ const AddCustomer = ({
   onCancel,
   showNextButton = true,
 }) => {
+  // =========================
+  // 🔹 LOCAL STATE MANAGEMENT
+  // =========================
   const [mobileError, setMobileError] = useState("");
   const [alternateMobileError, setAlternateMobileError] = useState("");
   const [mobileExists, setMobileExists] = useState(false);
-
+  // =========================
+  // 🔹 REACT HOOK FORM SETUP
+  // =========================
   const {
     register,
     handleSubmit,
@@ -33,14 +46,22 @@ const AddCustomer = ({
     },
   });
 
-  // Validate mobile number (10 digits)
+  // =========================
+  // 🔹 MOBILE VALIDATION
+  // Ensures mobile number contains exactly 10 digits
+  // =========================
   const validateMobile = (value) => {
     if (!value) return true;
     const mobileRegex = /^\d{10}$/;
     return mobileRegex.test(value);
   };
 
-  // Handle mobile input change
+  // =========================
+  // 🔹 MOBILE INPUT HANDLING
+  // - Removes previous errors
+  // - Validates length
+  // - Resets duplicate state
+  // =========================
   const handleMobileChange = (value) => {
     setMobileError("");
     setMobileExists(false);
@@ -49,31 +70,11 @@ const AddCustomer = ({
       setMobileError("Mobile number must be exactly 10 digits");
     }
   };
-  const handleMobileBlur = async () => {
-    const mobile = getValues("mobile");
-
-    if (!mobile || mobile.length !== 10) return;
-    if (!onCheckMobile) return;
-
-    try {
-      const res = await onCheckMobile(mobile);
-
-      const exists = res?.exists || res?.data?.exists;
-      const customerName = res?.data?.data?.name || res?.data?.name;
-
-      if (exists) {
-        setMobileExists(true);
-        setMobileError(
-          `Customer already exists${customerName ? ` (${customerName})` : ""}`,
-        );
-      } else {
-        setMobileExists(false);
-        setMobileError("");
-      }
-    } catch (err) {
-      console.log("API ERROR:", err);
-    }
-  };
+  // =========================
+  // 🔹 ALTERNATE MOBILE HANDLER
+  // - Allows only digits
+  // - Restricts to 10 digits
+  // =========================
   // Handle alternate mobile input change
   const handleAlternateMobileChange = (e) => {
     let value = e.target.value.replace(/\D/g, ""); // Remove non-digits
@@ -85,7 +86,14 @@ const AddCustomer = ({
       setAlternateMobileError("");
     }
   };
-
+  // =========================
+  // 🔹 FORM SUBMISSION
+  // Handles:
+  // - required validation
+  // - mobile validation
+  // - duplicate validation
+  // - save customer
+  // =========================
   const onSubmit = async (data) => {
     if (!data.name || !data.mobile) {
       toast.error("Name and Mobile No. Required");
@@ -121,7 +129,10 @@ const AddCustomer = ({
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
-
+  // =========================
+  // 🔹 SAVE & CONTINUE FLOW
+  // Saves customer and moves user to next step
+  // =========================
   const handleSaveAndNext = async () => {
     const data = getValues();
 
@@ -147,7 +158,9 @@ const AddCustomer = ({
       toast.error("Failed to save customer");
     }
   };
-
+  // =========================
+  // 🔹 MAIN FORM UI
+  // =========================
   return (
     <div
       className="relative 

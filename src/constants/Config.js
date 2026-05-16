@@ -160,9 +160,9 @@ export const generateCreateWorklog = (newData, userName, empId) => {
     "__rowNumber",
     "__srNo",
     "id",
-    "WorkLogs", // ✅ add this
-    "UpdatedBy", // ✅ add this
-    "newWorkLog", // ✅ add this
+    "WorkLogs",
+    "UpdatedBy",
+    "newWorkLog",
   ]);
 
   Object.keys(newData).forEach((key) => {

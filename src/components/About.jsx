@@ -54,12 +54,6 @@ const About = () => {
               our clients to shape their vision using carefully selected
               materials, handcrafted details, and bespoke solutions. Because a
               truly beautiful space isn’t just seen — it’s felt.
-              {/* Sadguru Krupa Furnishing is built on a passion for transforming
-              houses into homes. We work closely with our clients to understand
-              their vision and bring it to life through carefully selected
-              materials, handcrafted pieces, and personalized design solutions.
-              Our goal is simple — to create spaces that feel as good as they
-              look. */}
             </p>
           </div>
 

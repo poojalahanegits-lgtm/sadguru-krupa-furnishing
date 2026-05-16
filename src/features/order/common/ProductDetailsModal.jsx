@@ -17,18 +17,18 @@ const ProductDetailsModal = ({ product, isOpen, onClose, formatDate }) => {
       label: "Product Code",
       value: product.productCode,
     },
-    {
-      label: "Brand",
-      value: product.brand,
-    },
+    // {
+    //   label: "Brand",
+    //   value: product.brand,
+    // },
     {
       label: "Quantity",
       value: product.quantity,
     },
-    {
-      label: "Unit",
-      value: product.unit,
-    },
+    // {
+    //   label: "Unit",
+    //   value: product.unit,
+    // },
     {
       label: "Price",
       value: product.price ? `₹${Number(product.price).toLocaleString()}` : "-",
@@ -78,7 +78,7 @@ const ProductDetailsModal = ({ product, isOpen, onClose, formatDate }) => {
           <div>
             <h3 className="text-lg font-bold mb-4">Basic Details</h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {basicFields.map((item) => (
                 <div
                   key={item.label}
@@ -101,7 +101,7 @@ const ProductDetailsModal = ({ product, isOpen, onClose, formatDate }) => {
             <div>
               <h3 className="text-lg font-bold mb-4">Product Specifications</h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 {Object.entries(product.attributes || {}).map(
                   ([key, value]) => (
                     <div

@@ -17,6 +17,9 @@ const CustomerList = ({
   onDeleteCustomer,
   onCheckMobile,
 }) => {
+  // =========================
+  // 🔹 STATE MANAGEMENT
+  // =========================
   const [showCityDropdown, setShowCityDropdown] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,7 +29,12 @@ const CustomerList = ({
   const [customerToDelete, setCustomerToDelete] = useState(null);
 
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const filtegrayCustomers = customers
+
+  // =========================
+  // 🔹 FILTER + SEARCH LOGIC
+  // =========================
+
+  const filteredCustomers = customers
     .filter((customer) => {
       const term = searchTerm.toLowerCase();
 
@@ -50,19 +58,26 @@ const CustomerList = ({
     ...new Set(customers.map((c) => c.city?.trim()).filter(Boolean)),
   ].sort((a, b) => a.localeCompare(b));
 
-  const totalPages = Math.ceil(filtegrayCustomers.length / ITEMS_PER_PAGE);
+  // =========================
+  // 🔹 PAGINATION LOGIC
+  // =========================
+  const totalPages = Math.ceil(filteredCustomers.length / ITEMS_PER_PAGE);
 
-  const paginatedCustomers = filtegrayCustomers.slice(
+  const paginatedCustomers = filteredCustomers.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
+  // =========================
+  // 🔹 DELETE CUSTOMER FLOW
+  // =========================
+
   const confirmDeleteCustomer = () => {
     if (onDeleteCustomer && customerToDelete) {
       onDeleteCustomer(customerToDelete._id || customerToDelete.id);
     }
 
     // adjust page manually
-    const newTotal = filtegrayCustomers.length - 1;
+    const newTotal = filteredCustomers.length - 1;
     const newTotalPages = Math.ceil(newTotal / ITEMS_PER_PAGE);
 
     if (currentPage > newTotalPages) {
@@ -72,7 +87,9 @@ const CustomerList = ({
     setShowDeleteModal(false);
     setCustomerToDelete(null);
   };
-
+  // =========================
+  // 🔹 MAIN RENDER
+  // =========================
   return (
     <div className=" border border-gray-200 shadow-sm overflow-hidden ">
       {showCreateForm ? (
@@ -416,7 +433,7 @@ export default CustomerList;
 //   const [customerToDelete, setCustomerToDelete] = useState(null);
 
 //   const [showCreateForm, setShowCreateForm] = useState(false);
-//   const filtegrayCustomers = customers
+//   const filteredCustomers = customers
 //     .filter((customer) => {
 //       const term = searchTerm.toLowerCase();
 
@@ -438,9 +455,9 @@ export default CustomerList;
 
 //   const uniqueCities = [...new Set(customers.map((c) => c.city))];
 
-//   const totalPages = Math.ceil(filtegrayCustomers.length / ITEMS_PER_PAGE);
+//   const totalPages = Math.ceil(filteredCustomers.length / ITEMS_PER_PAGE);
 
-//   const paginatedCustomers = filtegrayCustomers.slice(
+//   const paginatedCustomers = filteredCustomers.slice(
 //     (currentPage - 1) * ITEMS_PER_PAGE,
 //     currentPage * ITEMS_PER_PAGE,
 //   );
@@ -450,7 +467,7 @@ export default CustomerList;
 //     }
 
 //     // adjust page manually
-//     const newTotal = filtegrayCustomers.length - 1;
+//     const newTotal = filteredCustomers.length - 1;
 //     const newTotalPages = Math.ceil(newTotal / ITEMS_PER_PAGE);
 
 //     if (currentPage > newTotalPages) {
